@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load django_bootstrap5 %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="mb-3">{{ post.title }}</h1>
+            <p>{{ post.content }}</p>
+            <p><i>Escrito por: {{ post.author }}</i></p>
+            
+            {% if user == post.author %}
+            <!-- Enlaces para editar y eliminar el post -->
+            <div class="mt-4">
+                <a href="{% url 'edit_post' post.id %}" class="btn btn-warning">Editar</a>
+                <form action="{% url 'delete_post' post.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de que deseas eliminar este post?');">
+                        Eliminar
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

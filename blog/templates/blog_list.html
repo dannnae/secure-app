@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% load django_bootstrap5 %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <h1 class="mb-4">Entradas del Blog</h1>
+
+            {% if user.is_authenticated %}
+            <a href="{% url 'create_post' %}" class="btn btn-primary mb-4">Crear nuevo post</a>
+            {% endif %}
+
+            <ul class="list-group">
+                {% for post in posts %}
+                    <li class="list-group-item">
+                        <a href="{% url 'blog_detail' post.id %}" class="h5 text-decoration-none">{{ post.title }}</a>
+                        <p class="text-muted small">Publicado el {{ post.created_at }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
