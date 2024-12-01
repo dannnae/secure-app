@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% load django_bootstrap5 %}
 
+{% load django_bootstrap5 %}
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -12,45 +12,16 @@
             <a href="{% url 'create_post' %}" class="btn btn-primary mb-4">Crear nuevo post</a>
             {% endif %}
 
-            <div class="card">
-                <ul class="list-group list-group-flush">
-                    {% for post in posts %}
-                        <li class="list-group-item">
-                            <a href="{% url 'blog_detail' post.id %}" class="h5 text-decoration-none">{{ post.title }}</a>
-                            <p class="text-muted small mb-0">Publicado el {{ post.created_at|date:"d/m/Y H:i" }}</p>
-                        </li>
-                    {% empty %}
-                        <li class="list-group-item text-center">No hay entradas de blog disponibles.</li>
-                    {% endfor %}
-                </ul>
-            </div>
-
-            {% if is_paginated %}
-            <nav aria-label="Page navigation" class="mt-4">
-                <ul class="pagination justify-content-center">
-                    {% if page_obj.has_previous %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo; Anterior</a>
-                        </li>
-                    {% endif %}
-
-                    {% for num in page_obj.paginator.page_range %}
-                        {% if page_obj.number == num %}
-                            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
-                        {% else %}
-                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-                        {% endif %}
-                    {% endfor %}
-
-                    {% if page_obj.has_next %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente &raquo;</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
-            {% endif %}
+            <ul class="list-group">
+                {% for post in posts %}
+                    <li class="list-group-item">
+                        <a href="{% url 'blog_detail' post.id %}" class="h5 text-decoration-none">{{ post.title }}</a>
+                        <p class="text-muted small">Publicado el {{ post.created_at }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
         </div>
     </div>
 </div>
 {% endblock %}
+
